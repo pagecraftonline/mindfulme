@@ -33,14 +33,14 @@
         :root {
           --primary-color: #4f46e5;
           --secondary-color: #c084fc;
-          --background-color: #ffffff;
+          --background-color: ;
           --text-color: #1e293b;
           --border-radius: 0.5rem;
           --box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { overflow-x: hidden; }
-        body { font-family: Arial, sans-serif; color: var(--text-color); background-color: var(--background-color); line-height: 1.6;  }
+        body { font-family: Arial, sans-serif; color: var(--text-color);  line-height: 1.6;  }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         .btn { display: inline-block; padding: 0.75rem 2rem; border: none; border-radius: var(--border-radius); font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; }
         .btn-primary { background-color: var(--primary-color); color: white; }
@@ -136,6 +136,64 @@
     </style>
 </head>
 <body>
+    <div style="position: fixed; inset: 0; -z-index: -10; overflow: hidden;"><div class="bg-layer-0" style="position: absolute; inset: 0; opacity: 1; z-index: 0; mix-blend-mode: normal; pointer-events: none; background: #0a0e27;"></div><canvas id="bg-particles-canvas" style="position: absolute; inset: 0; pointer-events: none;"></canvas></div><script>
+(function(){
+  var canvas = document.getElementById('bg-particles-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  var particles = [];
+  
+    var layer0 = {"particle_count":100,"particle_type":"stars","color":"#ffffff","speed":0.3,"particle_size":2};
+    for (var i = 0; i < layer0.particle_count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * layer0.speed,
+        vy: (Math.random() - 0.5) * layer0.speed,
+        size: Math.random() * layer0.particle_size + 2,
+        opacity: Math.random() * 0.5 + 0.3,
+        color: layer0.color,
+        type: layer0.particle_type
+      });
+    }
+  
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      if (p.type === 'circles') {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (p.type === 'stars') {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.beginPath();
+        for (var i = 0; i < 5; i++) {
+          ctx.lineTo(0, -p.size);
+          ctx.translate(0, -p.size);
+          ctx.rotate(Math.PI * 2 / 10);
+          ctx.lineTo(0, p.size / 2);
+          ctx.translate(0, p.size / 2);
+          ctx.rotate(Math.PI * 2 / 10);
+        }
+        ctx.fill();
+        ctx.restore();
+      }
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
     <header id="component-component-1764962735962-0-0" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 9999; background: #ffffff; color: #1e293b"><div style="max-width: 1200px; margin: 0 auto; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between;"><a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.75rem;"><img src="https://base44.app/api/apps/691ad2db10b4e41706e437fa/files/public/691ad2db10b4e41706e437fa/dfc864337_Gemini_Generated_Image_3qilrt3qilrt3qil.png" alt="Logo" style="height: 2rem; width: auto; max-width: 120px; object-fit: contain;"/></a><button id="menu-toggle-header-component-1764962735962-0-0" style="display: none; background: none; border: none; cursor: pointer; padding: 0.5rem;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="menu-header-component-1764962735962-0-0" style="display: flex; align-items: center; gap: 1rem;"><a href="index.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); border-bottom: 2px solid transparent; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Home</a><a href="features.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); font-weight: bold; color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Features</a><a href="pricing.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); border-bottom: 2px solid transparent; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Pricing</a><a href="testimonials.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); border-bottom: 2px solid transparent; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Testimonials</a><a href="faq.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); border-bottom: 2px solid transparent; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">FAQs</a><a href="contact.html" style="text-decoration: none; color: inherit; transition: opacity 0.2s; font-size: clamp(0.875rem, 2vw, 1rem); border-bottom: 2px solid transparent; padding-bottom: 2px; margin-bottom: -2px;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contact</a></nav></div></header><script>(function(){var toggle=document.getElementById('menu-toggle-header-component-1764962735962-0-0');var menu=document.getElementById('menu-header-component-1764962735962-0-0');function checkMobile(){if(window.innerWidth<=768){toggle.style.display='block';menu.style.display='none';menu.style.position='absolute';menu.style.top='100%';menu.style.left='0';menu.style.right='0';menu.style.background='#ffffff';menu.style.flexDirection='column';menu.style.padding='1rem';menu.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)';}else{toggle.style.display='none';menu.style.display='flex';menu.style.position='static';menu.style.flexDirection='row';menu.style.padding='0';menu.style.boxShadow='none';}}toggle.addEventListener('click',function(){menu.style.display=menu.style.display==='flex'?'none':'flex';});window.addEventListener('resize',checkMobile);checkMobile();})();</script>
 <section id="component-component-1764962735962-0-1" class="scroll-animate scroll-slide-up" style="padding: 4rem 1.5rem; color: #1e293b; animation: slide-up"><div class="container"><h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: bold; text-align: center; margin-bottom: 3rem; color: #1e293b;">Our Excellent Features</h2><div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;"><div class="card" style="text-align: center; flex: 0 1 calc(33.333% - 1.5rem); min-width: 250px; max-width: 350px; background-color: #ffffff; color: #1e293b;"><div style="width: 4rem; height: 4rem; margin: 0 auto 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; background-color: #4f46e520; color: #4f46e5;"><svg width="32" height="32" style="max-width:32px;max-height:32px;" stroke- stroke="currentColor"   viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path opacity="0.5" d="M2 9.26044C2 13.0079 6.01943 16.9714 8.96173 19.3707C10.2937 20.4569 10.9597 21 12 21C13.0403 21 13.7063 20.4569 15.0383 19.3707C17.9806 16.9714 22 13.008 22 9.2604C22 3.34931 16.4998 0.662637 12 5.49877C7.50016 0.662637 2 3.3495 2 9.26044Z" fill="none"/>
